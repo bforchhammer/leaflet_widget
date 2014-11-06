@@ -1,0 +1,8 @@
+name: Leaflet Widget
+type: module
+description: Provides a leaflet map widget for geofields.
+core: 8.x
+package: Leaflet
+dependencies:
+  - geofield
+  - leaflet

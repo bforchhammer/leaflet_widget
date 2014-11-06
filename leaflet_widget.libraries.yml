@@ -1,0 +1,35 @@
+leaflet-draw:
+  remote: https://github.com/Leaflet/Leaflet.draw
+  version: 0.2.3
+  license:
+    name: MIT License
+    url: https://github.com/Leaflet/Leaflet.draw/blob/0.2.3/MIT-LICENCE.txt
+    gpl-compatible: true
+  js:
+    //cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.js: {}
+  css:
+    component:
+      //cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css: {}
+  dependencies:
+    - leaflet/leaflet
+
+wicket-leaflet:
+  remote: https://github.com/tnightingale/Leaflet.widget
+  version: master
+  license:
+    name: GPLv3
+    url: https://github.com/arthur-e/Wicket/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    //geojam.net/static/wicket/wicket.src.js: {}
+    //geojam.net/static/wicket/wicket-leaflet.src.js: {}
+  dependencies:
+    - leaflet/leaflet
+
+widget:
+  version: VERSION
+  js:
+    js/widget.js: {}
+  dependencies:
+    - leaflet/leaflet-drupal
+    - leaflet_widget/wicket-leaflet
