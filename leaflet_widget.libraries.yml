@@ -15,14 +15,14 @@ leaflet-draw:
 
 wicket-leaflet:
   remote: https://github.com/tnightingale/Leaflet.widget
-  version: master
+  version: v1.2
   license:
     name: GPLv3
     url: https://github.com/arthur-e/Wicket/blob/master/LICENSE
     gpl-compatible: true
   js:
-    //geojam.net/static/wicket/wicket.src.js: {}
-    //geojam.net/static/wicket/wicket-leaflet.src.js: {}
+    /libraries/Wicket/wicket.js: {}
+    /libraries/Wicket/wicket-leaflet.js: {}
   dependencies:
     - leaflet/leaflet
 

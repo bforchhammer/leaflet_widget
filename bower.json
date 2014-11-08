@@ -1,0 +1,7 @@
+{
+  "name": "leaflet_widget",
+  "version": "0.0.0",
+  "dependencies": {
+    "Wicket": "https://github.com/arthur-e/Wicket.git#v1.2"
+  }
+}
