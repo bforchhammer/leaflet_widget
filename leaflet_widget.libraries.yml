@@ -1,18 +1,3 @@
-leaflet-draw:
-  remote: https://github.com/Leaflet/Leaflet.draw
-  version: 0.2.3
-  license:
-    name: MIT License
-    url: https://github.com/Leaflet/Leaflet.draw/blob/0.2.3/MIT-LICENCE.txt
-    gpl-compatible: true
-  js:
-    //cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.js: {}
-  css:
-    component:
-      //cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css: {}
-  dependencies:
-    - leaflet/leaflet
-
 wicket-leaflet:
   remote: https://github.com/tnightingale/Leaflet.widget
   version: v1.2
