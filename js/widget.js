@@ -160,12 +160,17 @@
      * Update the WKT text input field.
      */
     Drupal.leaflet_widget.prototype.update_text = function () {
-        var wkt = new Wkt.Wkt();
         if (this.features.length == 0) {
             $(this.wkt_selector, this.container).val('');
         }
         else if (this.features.length == 1) {
+            var wkt = new Wkt.Wkt();
             wkt.fromObject(this.features[0]);
+
+            // Limit the number of decimals to 7.
+            wkt.components[0].x = Math.round(wkt.components[0].x * 10000000) / 10000000;
+            wkt.components[0].y = Math.round(wkt.components[0].y * 10000000) / 10000000;
+
             $(this.wkt_selector, this.container).val(wkt.write());
         }
         else {
