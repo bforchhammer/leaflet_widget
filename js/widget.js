@@ -16,6 +16,7 @@
                     else {
                         // If we already had a widget, update map to make sure that WKT and map are synchronized.
                         map.data('leaflet_widget').update_map();
+                        map.data('leaflet_widget').update_wkt_state();
                     }
                 });
             });
@@ -42,6 +43,9 @@
 
         // Update map whenever the WKT input field is changed.
         this.container.on('change', this.wkt_selector, $.proxy(this.update_map, this));
+
+        // Show, hide, mark read-only.
+        this.update_wkt_state();
     };
 
     /**
@@ -113,6 +117,7 @@
             }
             else {
                 // Move the existing marker.
+                // @todo this only works for L.marker elements, not e.g. polygons.
                 this.features[0].setLatLng(latlng);
             }
         }
@@ -166,6 +171,14 @@
         else {
             console.error("Array of " + this.features.length + " points? Not sure what to do.")
         }
+    };
+
+    /**
+     * Set visibility and readonly attribute of the wkt input element.
+     */
+    Drupal.leaflet_widget.prototype.update_wkt_state = function () {
+        $('.form-item', this.container).toggle(!this.settings.inputHidden);
+        $(this.wkt_selector, this.container).prop('readonly', this.settings.inputReadonly);
     };
 
     /**

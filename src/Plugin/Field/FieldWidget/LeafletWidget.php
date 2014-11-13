@@ -39,6 +39,10 @@ class LeafletWidget extends GeofieldDefaultWidget {
         ),
         'auto_center' => TRUE,
         'zoom' => 10,
+      ),
+      'input' => array(
+        'show' => TRUE,
+        'readonly' => FALSE,
       )
     );
   }
@@ -57,24 +61,23 @@ class LeafletWidget extends GeofieldDefaultWidget {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     parent::settingsForm($form, $form_state);
 
-    $settings = $this->getSetting('map');
-
+    $map_settings = $this->getSetting('map');
     $form['map'] = array(
       '#type' => 'fieldset',
-      '#title' => t('Default map settings'),
+      '#title' => t('Map Settings'),
     );
     $form['map']['leaflet_map'] = array(
       '#title' => $this->t('Leaflet Map'),
       '#type' => 'select',
       '#options' => array('' => '-- Empty --') + $this->getLeafletMaps(),
-      '#default_value' => $settings['leaflet_map'],
+      '#default_value' => $map_settings['leaflet_map'],
       '#required' => TRUE,
     );
     $form['map']['height'] = array(
       '#title' => $this->t('Height'),
       '#type' => 'textfield',
       '#required' => TRUE,
-      '#default_value' => $settings['height'],
+      '#default_value' => $map_settings['height'],
     );
     $form['map']['center'] = array(
       '#type' => 'fieldset',
@@ -85,26 +88,47 @@ class LeafletWidget extends GeofieldDefaultWidget {
     $form['map']['center']['lat'] = array(
       '#type' => 'textfield',
       '#title' => t('Latitude'),
-      '#default_value' => $settings['center']['lat'],
+      '#default_value' => $map_settings['center']['lat'],
       '#required' => TRUE,
     );
     $form['map']['center']['lng'] = array(
       '#type' => 'textfield',
       '#title' => t('Longtitude'),
-      '#default_value' => $settings['center']['lng'],
+      '#default_value' => $map_settings['center']['lng'],
       '#required' => TRUE,
     );
     $form['map']['auto_center'] = array(
       '#type' => 'checkbox',
       '#title' => t('Automatically center map on existing features'),
       '#description' => t("This option overrides the widget's default center."),
-      '#default_value' => $settings['auto_center'],
+      '#default_value' => $map_settings['auto_center'],
     );
     $form['map']['zoom'] = array(
       '#type' => 'textfield',
       '#title' => t('Default zoom level'),
-      '#default_value' => $settings['zoom'],
+      '#default_value' => $map_settings['zoom'],
       '#required' => TRUE,
+    );
+
+    $input_settings = $this->getSetting('input');
+    $form['input'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Geofield Settings'),
+    );
+    $form['input']['show'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Show geofield input element'),
+      '#default_value' => $input_settings['show'],
+    );
+    $form['input']['readonly'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Make geofield input element read-only'),
+      '#default_value' => $input_settings['readonly'],
+      '#states' => array(
+        'invisible' => array(
+          ':input[name="fields[field_geofield][settings_edit_form][settings][input][show]"]' => array('checked' => FALSE),
+        ),
+      )
     );
 
     return $form;
@@ -129,6 +153,7 @@ class LeafletWidget extends GeofieldDefaultWidget {
 
     // Determine map settings and add map element.
     $map_settings = $this->getSetting('map');
+    $input_settings = $this->getSetting('input');
     $map = leaflet_map_get_info($map_settings['leaflet_map']);
     $map['settings']['center'] = $map_settings['center'];
     $map['settings']['zoom'] = $map_settings['zoom'];
@@ -145,6 +170,8 @@ class LeafletWidget extends GeofieldDefaultWidget {
     $js_settings['multiple'] = $cardinality == 1 ? FALSE : TRUE;
     $js_settings['cardinality'] = $cardinality > 0 ? $cardinality : 0;
     $js_settings['autoCenter'] = $map_settings['auto_center'];
+    $js_settings['inputHidden'] = empty($input_settings['show']);
+    $js_settings['inputReadonly'] = !empty($input_settings['readonly']);
 
     // Include javascript.
     $element['map']['#attached']['library'][] = 'leaflet_widget/widget';
