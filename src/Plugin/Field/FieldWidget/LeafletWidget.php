@@ -176,10 +176,7 @@ class LeafletWidget extends GeofieldDefaultWidget {
     // Include javascript.
     $element['map']['#attached']['library'][] = 'leaflet_widget/widget';
     // Settings and geo-data are passed to the widget keyed by field id.
-    $element['map']['#attached']['js'][] = array(
-      'type' => 'setting',
-      'data' => array('leaflet_widget' => array($element['map']['#map_id'] => $js_settings)),
-    );
+    $element['map']['#attached']['drupalSettings']['leaflet_widget'] = array($element['map']['#map_id'] => $js_settings);
 
     return $element;
   }
