@@ -174,7 +174,7 @@
             $(this.wkt_selector, this.container).val(wkt.write());
         }
         else {
-            console.error("Array of " + this.features.length + " points? Not sure what to do.")
+          if (window.console) console.error("Array of " + this.features.length + " points? Not sure what to do.")
         }
     };
 
@@ -217,7 +217,7 @@
                 wkt.read(value.replace('\n', '').replace('\r', '').replace('\t', ''));
             } catch (e2) {
                 if (e2.name === 'WKTError') {
-                    console.error(e2.message);
+                    if (window.console) console.error(e2.message);
                     return;
                 }
             }
