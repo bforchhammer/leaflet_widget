@@ -59,6 +59,9 @@
             }, this));
             this.update_map();
         }
+        setInterval(function() {
+            map.invalidateSize();
+        }, 1000);
     };
 
     /**
